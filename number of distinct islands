@@ -1,0 +1,35 @@
+  public:
+  void dfs(vector<vector<int>>& grid,int i,int j,vector<vector<bool>>&visited,int io,int jo,vector<pair<int,int>>&vec){
+    if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || visited[i][j] || grid[i][j]==0){
+        return ;
+    }
+    visited[i][j]=true;
+        vec.push_back({i-io,j-jo});
+        dfs(grid,i-1,j,visited,io,jo,vec); // up
+        dfs(grid,i+1,j,visited,io,jo,vec);//down
+        dfs(grid,i,j-1,visited,io,jo,vec);//left
+        dfs(grid,i,j+1,visited,io,jo,vec);//right
+    
+  }
+    int countDistinctIslands(vector<vector<int>>& grid) {
+        // code here
+        if(grid.empty()){
+            return 0;
+        }
+        int row=grid.size();
+        int col=grid[0].size();
+        vector<vector<bool>>visited(row,vector<bool>(col,false));
+        set<vector<pair<int,int>>>st;
+    for(int i=0;i<row;i++){
+        for(int j=0;j<col;j++){
+            if(!visited[i][j] && grid[i][j]==1){
+            vector<pair<int,int>>vec;
+            dfs(grid,i,j,visited,i,j,vec);
+            st.insert(vec);
+            }
+        }
+    }
+    return st.size();
+
+    }
+};
